@@ -1,5 +1,6 @@
 ﻿//Bibliotecas 
 using Microsoft.AspNetCore.Mvc;
+using Projeto1.Models;
 using Projeto1.Repositorio;
 
 namespace Projeto1.Controllers
@@ -41,6 +42,38 @@ namespace Projeto1.Controllers
             ModelState.AddModelError("", "Email ou senha inválidos.");
             //retorna view Login 
             return View();
+        }
+
+
+               // Define uma action chamada Cadastro que retorna um IActionResult.
+        public IActionResult Cadastro()
+        {
+            // Retorna a View  Cadastro.
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Cadastro(Usuario usuario)
+        {
+            // Verifica se o ModelState é válido. O ModelState é considerado válido se não houver erros de validação.
+            if (ModelState.IsValid)
+            {
+                /* Se o modelo for válido:
+                 Chama o método AdicionarUsuario do _usuarioRepositorio, passando o objeto Usuario recebido.
+                 Isso  salvará as informações do novo usuário no banco de dados.*/
+
+                _usuarioRepositorio.AdicionarUsuario(usuario);
+
+                /* Redireciona o usuário para a action "Login" deste mesmo Controller (LoginController).
+                  após um cadastro bem-sucedido, redirecionará à página de login.*/
+                return RedirectToAction("Login");
+            }
+
+            /* Se o ModelState não for válido (houver erros de validação):
+             Retorna a View de Cadastro novamente, passando o objeto Usuario com os erros de validação.
+             Isso permite que a View exiba os erros para o usuário corrigir o formulário.*/
+            return View(usuario);
+
         }
         public IActionResult Contato()
         { 
