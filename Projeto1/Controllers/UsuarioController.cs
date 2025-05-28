@@ -29,9 +29,9 @@ namespace Projeto1.Controllers
             // Verifica se um usuário foi encontrado for diferente de vazio e se a senha fornecida corresponde à senha do usuário encontrado.
             if (usuario != null && usuario.Senha == senha)
             {
+                return RedirectToAction("Cliente", "Cliente");
                 // Autenticação bem-sucedida
                 // Redireciona o usuário para a action "Index" do Controller "Cliente".
-                return RedirectToAction("Index", "Cliente");
             }
              /* Se a autenticação falhar (usuário não encontrado ou senha incorreta):
              Adiciona um erro ao ModelState. ModelState armazena o estado do modelo e erros de validação.
